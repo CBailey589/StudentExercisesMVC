@@ -143,44 +143,14 @@ namespace StudentExercisesMVC.Controllers
         // GET: Students/Edit/5
         public ActionResult Edit(int id)
         {
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-                using (SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                            SELECT s.Id,
-                                s.FirstName,
-                                s.LastName,
-                                s.SlackHandle,
-                                s.CohortId
-                            FROM Student s
-                            WHERE s.Id = @id
-                        ";
-                    cmd.Parameters.Add(new SqlParameter("@id", id));
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    Student student = new Student();
-                    while (reader.Read())
-                    {
-                        student.Id = reader.GetInt32(reader.GetOrdinal("Id"));
-                        student.FirstName = reader.GetString(reader.GetOrdinal("FirstName"));
-                        student.LastName = reader.GetString(reader.GetOrdinal("LastName"));
-                        student.SlackHandle = reader.GetString(reader.GetOrdinal("SlackHandle"));
-                        student.CohortId = reader.GetInt32(reader.GetOrdinal("CohortId"));
-                    };
-
-                    reader.Close();
-
-                    return View(student);
-                }
-            }
+            StudentEditViewModel model = new StudentEditViewModel(Connection, id);
+            return View(model);
         }
 
         // POST: Students/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [FromForm] Student student)
+        public ActionResult Edit(int id, [FromForm] StudentEditViewModel model)
         {
             try
             {
@@ -198,10 +168,10 @@ namespace StudentExercisesMVC.Controllers
                             WHERE Id = @id
                         ";
                         cmd.Parameters.Add(new SqlParameter("@id", id));
-                        cmd.Parameters.Add(new SqlParameter("@firstName", student.FirstName));
-                        cmd.Parameters.Add(new SqlParameter("@lastName", student.LastName));
-                        cmd.Parameters.Add(new SqlParameter("@handle", student.SlackHandle));
-                        cmd.Parameters.Add(new SqlParameter("@cId", student.CohortId));
+                        cmd.Parameters.Add(new SqlParameter("@firstName", model.Student.FirstName));
+                        cmd.Parameters.Add(new SqlParameter("@lastName", model.Student.LastName));
+                        cmd.Parameters.Add(new SqlParameter("@handle", model.Student.SlackHandle));
+                        cmd.Parameters.Add(new SqlParameter("@cId", model.Student.CohortId));
 
                         SqlDataReader reader = cmd.ExecuteReader();
                     }
