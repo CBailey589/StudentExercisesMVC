@@ -33,7 +33,7 @@ namespace StudentExercisesMVC.Models.ViewModels
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT c.Id, c.Name from Cohort c";
+                    cmd.CommandText = @"SELECT c.Id, c.Designation from Cohort c";
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -44,7 +44,7 @@ namespace StudentExercisesMVC.Models.ViewModels
                         Cohort cohort = new Cohort
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                            Name = reader.GetString(reader.GetOrdinal("Designation"))
                         };
 
                         cohorts.Add(cohort);
@@ -56,11 +56,11 @@ namespace StudentExercisesMVC.Models.ViewModels
                         Value = li.Id.ToString()
                     }).ToList();
 
-                    Cohorts.Insert(0, new SelectListItem
-                    {
-                        Text = "Choose cohort...",
-                        Value = "0"
-                    });
+                    //Cohorts.Insert(0, new SelectListItem
+                    //{
+                    //    Text = "Choose cohort...",
+                    //    Value = "0"
+                    //});
                 }
             }
         }
