@@ -56,11 +56,6 @@ namespace StudentExercisesMVC.Models.ViewModels
                         Value = li.Id.ToString()
                     }).ToList();
 
-                    //Cohorts.Insert(0, new SelectListItem
-                    //{
-                    //    Text = "Choose cohort...",
-                    //    Value = "0"
-                    //});
                     reader.Close();
                 }
                 using (SqlCommand cmd = conn.CreateCommand())
@@ -89,37 +84,5 @@ namespace StudentExercisesMVC.Models.ViewModels
                 }
             }
         }
-
-        //public void GetStudent(int id)
-        //{
-        //    using (SqlConnection conn = Connection)
-        //    {
-        //        conn.Open();
-        //        using (SqlCommand cmd = conn.CreateCommand())
-        //        {
-        //            cmd.CommandText = @"
-        //                    SELECT s.Id,
-        //                        s.FirstName,
-        //                        s.LastName,
-        //                        s.SlackHandle,
-        //                        s.CohortId
-        //                    FROM Student s
-        //                    WHERE s.Id = @id
-        //                ";
-        //            cmd.Parameters.Add(new SqlParameter("@id", id));
-        //            SqlDataReader reader = cmd.ExecuteReader();
-
-        //            while (reader.Read())
-        //            {
-        //                Student.Id = reader.GetInt32(reader.GetOrdinal("Id"));
-        //                Student.FirstName = reader.GetString(reader.GetOrdinal("FirstName"));
-        //                Student.LastName = reader.GetString(reader.GetOrdinal("LastName"));
-        //                Student.SlackHandle = reader.GetString(reader.GetOrdinal("SlackHandle"));
-        //                Student.CohortId = reader.GetInt32(reader.GetOrdinal("CohortId"));
-        //            };
-        //            //reader.Close();
-        //        }
-        //    }
-        //}
     }
 }
